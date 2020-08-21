@@ -12,4 +12,4 @@ const connectToDatabase = function () {
     })
 }
 
-module.exports = connectToDatabase
+module.exports = {connectToDatabase}
