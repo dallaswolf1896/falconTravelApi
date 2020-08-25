@@ -9,6 +9,8 @@ app.use(bodyParser.json())
 
 connectToDatabase()
 
+const cities = require('./routes/cities')
+app.use('/api', cities) 
 app.listen(port, function(){
     console.log("Servidor funcionando")
 })
