@@ -12,6 +12,8 @@ app.use(bodyParser.json())
 
 connectToDatabase()
 
+
+const cities = require('./routes/cities')
 const destinations = require('./routes/destinations')
 const purchase = require('./routes/purchase')
 const contactUs = require('./routes/contactUs')
@@ -21,7 +23,7 @@ app.use ('/api', destinations)
 app.use('/api', purchase)
 app.use('/api', contactUs)
 app.use('/api', user)
-
+app.use('/api', cities) 
 
 app.listen(port, function(){
     console.log('Servidor funcionando')
