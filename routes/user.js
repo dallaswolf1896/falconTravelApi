@@ -1,6 +1,6 @@
 const express = require('express');
 const api = express.Router();
-const user = require('../controller/user')
+const user = require('../controllers/user')
 
 /**
  * POST: Para crear
