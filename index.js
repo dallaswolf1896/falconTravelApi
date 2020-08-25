@@ -10,6 +10,8 @@ app.use(cors())
 app.use(bodyParser.json())
 
 connectToDatabase()
+const purchase = require('./routes/purchase');
+app.use('/api', purchase)
 
 const contactUs = require('./routes/contactUs')
 
