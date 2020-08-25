@@ -1,8 +1,12 @@
 const express = require('express');
 const api = express.Router();
 
-api.post('/create', () => {});
-api.put('/update/', () => {});
-api.delete('/remove/:id', () => {}); 
-api.get('/getAll',() => {});
-api.get('/getOne/:id',() => {});
+const contactUs = require('../controllers/contactUs.controller')
+
+api.post('/contactUs/create', contactUs.create);
+api.put('/contactUs/update/', () => {});
+api.delete('/contactUs/remove/:id', () => {});
+api.get('/contactUs/getAll',() => {});
+api.get('/contactUs/getOne/:id',() => {});
+
+module.exports = api;
