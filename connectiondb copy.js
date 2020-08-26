@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const connectToDatabase = function () {
 
-    mongoose.connect("mongodb://localhost:27017/falconTravel", { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+    mongoose.connect("mongodb+srv://<user>:<password>@<cluster>.lyowp.mongodb.net/<dbname>?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
         if (err) {
             console.log("Falló la conexión")
 
