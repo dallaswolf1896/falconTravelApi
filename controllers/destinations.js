@@ -1,6 +1,5 @@
 const Destinations = require('../models/destinations');
 
-
 exports.create = (req, res) => {
     if (!req.body) {
         return res.status(400).send({ message: 'Todos los campos son requeridos' });
@@ -54,5 +53,17 @@ exports.update = (req, res)=> {
         }
         return res.status(500).send ({ message:  'Error:  Actualizar el destino'})
 
+    })
+}
+
+
+exports.getAll = (req, res)=>{
+    const destination = new RegExp(`.*${req.query.searchBy}.*`,'i')
+    console.log(req.query.searchBy)
+
+    Destinations.find({destinationName:destination}).then(destinations =>{
+        res.send(destinations)
+    }).catch(error => {
+        res.status(500).send({message: error.message || 'Error de conexión'})
     })
 }
