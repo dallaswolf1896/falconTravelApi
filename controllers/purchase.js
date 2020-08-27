@@ -25,7 +25,6 @@ exports.create = (req, res) => {
         }
     )
 }
-
 exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({ message: 'Todos los campos son requeridos' })
@@ -53,3 +52,4 @@ exports.update = (req, res) => {
         return res.status(500).send({ message: 'Error al actualizar la compra' })
     })
 }
+
