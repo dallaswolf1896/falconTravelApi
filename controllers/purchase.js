@@ -1,4 +1,5 @@
 const Purchase = require('../models/purchase');
+const purchase = require('../models/purchase');
 
 exports.create = (req, res) => {
     if (!req.body) {
@@ -51,5 +52,15 @@ exports.update = (req, res) => {
         }
         return res.status(500).send({ message: 'Error al actualizar la compra' })
     })
+}
+
+exports.getAll = (req,res)=>{
+    const paymentM = new RegExp(`.*${req.query.searchBy}.*`,'i')
+    Purchase.find({paymentMethod: paymentM}).then(purchase =>{
+        res.send(purchase)
+    }).catch(error=>{
+        res.status(500).send({message: error.message || 'Error al conectar'})
+    })
+
 }
 
