@@ -41,3 +41,34 @@ exports.create = (req, res) => {
             }
         )
 }
+
+exports.update = (req,res)=>{
+    if (!req.body){
+        return res.status(400).send({message: 'todos los campos son requeridos'})
+    }
+    const user={
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        phone: req.body.phone,
+        photo: req.body.photo,
+        nationality: req.body.nationality,
+        address: req.body.address,
+        idDocument: req.body.idDocument
+    }
+    User.findByIdAndUpdate(req.params.id, user, {new:true}).then (usuario =>{ 
+        if (!usuario){
+            return res.status(400).send({ message: 'No se encontro usuario con ese ID'})
+        }
+        res.send(usuario)
+
+    }).catch(error=>{
+        if (error.kind=='ObjectId'){
+            return res.status(404).send({message: 'No se encontro un usuario con el Id indicado'})
+        }return res.status(500).send({message: 'Error al actualizar el usuario '})
+    })
+}
+
+/* correo -> falcontravelvip@gmail.com pass: falcontravel2020+*/
+
+
