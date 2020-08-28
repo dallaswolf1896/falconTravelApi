@@ -12,11 +12,20 @@ const passwordEncryption = (password) => {
 }
 
 exports.create = (req, res) => {
+
     if (!req.body) {
         return res.status(400).send({
             message: 'Todos los campos son requeridos'
         })
     }
+
+    User.countDocuments({email: req.body.email}).then(userEmail => {
+        if(userEmail >= 1){
+            return res.status(400).send({message:'Señor usuario, el email ya existe'})
+        }
+    })
+
+    
 
     const usuario = new User({
         firstName: req.body.firstName,
