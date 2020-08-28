@@ -1,8 +1,9 @@
 const User = require('../models/user')
 const crypto = require('crypto')
+const service = require('../services')
 
 
-const passwordEncryption=(password)=>{
+const passwordEncryption = (password) => {
     const algoritmo = 'aes-256-cbc'
     let key = crypto.createCipher(algoritmo, password)
     let passCrypto = key.update(password, 'utf8', 'hex')
@@ -42,11 +43,11 @@ exports.create = (req, res) => {
         )
 }
 
-exports.update = (req,res)=>{
-    if (!req.body){
-        return res.status(400).send({message: 'todos los campos son requeridos'})
+exports.update = (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({ message: 'todos los campos son requeridos' })
     }
-    const user={
+    const user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
@@ -56,27 +57,43 @@ exports.update = (req,res)=>{
         address: req.body.address,
         idDocument: req.body.idDocument
     }
-    User.findByIdAndUpdate(req.params.id, user, {new:true}).then (usuario =>{ 
-        if (!usuario){
-            return res.status(400).send({ message: 'No se encontro usuario con ese ID'})
+    User.findByIdAndUpdate(req.params.id, user, { new: true }).then(usuario => {
+        if (!usuario) {
+            return res.status(400).send({ message: 'No se encontro usuario con ese ID' })
         }
         res.send(usuario)
 
-    }).catch(error=>{
-        if (error.kind=='ObjectId'){
-            return res.status(404).send({message: 'No se encontro un usuario con el Id indicado'})
-        }return res.status(500).send({message: 'Error al actualizar el usuario '})
+    }).catch(error => {
+        if (error.kind == 'ObjectId') {
+            return res.status(404).send({ message: 'No se encontro un usuario con el Id indicado' })
+        }
+        return res.status(500).send({ message: 'Error al actualizar el usuario ' })
     })
 }
 
-/* correo -> falcontravelvip@gmail.com pass: falcontravel2020+*/
-
-exports.getAll = (req, res)=>{
-    const first = new RegExp(`.*${req.query.searchBy}.*`,'i')
+exports.getAll = (req, res) => {
+    const first = new RegExp(`.*${req.query.searchBy}.*`, 'i')
     console.log(req.query.searchBy)
-    User.find({firstName:first}).then(users =>{
+    User.find({ firstName: first }).then(users => {
         res.send(users)
-    }).catch(error =>{
-        res.status(500).send({message: error.message || 'Error de conexion con el servidor'})
+    }).catch(error => {
+        res.status(500).send({ message: error.message || 'Error de conexion con el servidor' })
+    })
+}
+
+exports.login = (req, res) => {
+    User.findOne({ email: req.body.email }, (error, dataUser) => {
+        if (dataUser != null) {
+            //console.log(req.body.password)
+            //console.log(passwordEncryption(req.body.password));
+            //console.log(dataUser.password)
+            if (passwordEncryption(req.body.password) != dataUser.password) {
+                return res.status(400).send({ message: 'Los datos no coinciden' })
+            } else {
+                res.send({ jwt: service.createToken(dataUser) })
+            }
+        } else {
+            return res.status(500).send({ message: 'Error al iniciar sesión' })
+        }
     })
 }
