@@ -5,7 +5,7 @@ const { connectToDatabase } = require('./connectiondb')
 
 
 const app = express() //aqui se inicializa express para poder usar todos los metodos que este framework nos da
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(cors())
 app.use(bodyParser.json())

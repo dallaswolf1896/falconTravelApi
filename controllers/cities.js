@@ -1,4 +1,5 @@
 const City = require('../models/cities');
+const cities = require('../models/cities');
 
 exports.update = (req, res) => {
     if (!req.body) {
@@ -32,4 +33,13 @@ exports.update = (req, res) => {
     })
 
 
+}
+exporte.getAll = (req, res)=>{
+    const city =  new RegExp(`.*${req.query.searchBy}.*`,'i')
+
+    City.find({citiesName}).then(cities=>{
+        res.send(cities)
+    }).catch(error=> {
+        res.status(500).send ({message: error.message || 'Error de  conexion'})
+    })
 }
