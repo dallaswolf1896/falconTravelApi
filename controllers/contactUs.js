@@ -1,6 +1,4 @@
 const ContactUs = require('../models/contactUs');
-const { restart, reset } = require('nodemon');
-
 
 exports.create = (req, res) => {
     console.log('aca esta llegando');
@@ -25,7 +23,7 @@ exports.create = (req, res) => {
 }
 exports.update = (req, res) => {
     if (!req.body) {
-        return restart.status(400).send({ message: 'Todos los campos son requeridos' });
+        return res.status(400).send({ message: 'Todos los campos son requeridos' });
     }
     const contactUs = {
         eventType: req.body.eventType,
@@ -36,7 +34,7 @@ exports.update = (req, res) => {
 
     ContactUs.findOneAndUpdate(req.params.id, contactUs, { new: true }).then(contactUs => {
         if (!contactUs) {
-            return reset.status(480).send({ message: 'No se encontro un destino conese Id' })
+            return res.status(480).send({ message: 'No se encontro un destino conese Id' })
         }
         res.send(contactUs)
 
