@@ -1,4 +1,3 @@
-
 const services = require('../services')
 
 exports.isAuth = (req, res, next) => {
@@ -14,5 +13,4 @@ exports.isAuth = (req, res, next) => {
     }).catch(error => {
         res.status(error.status).send({ message: error.message })
     })
-
 }
