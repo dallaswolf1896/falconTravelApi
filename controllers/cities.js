@@ -34,7 +34,7 @@ exports.update = (req, res) => {
 
 
 }
-exporte.getAll = (req, res)=>{
+exports.getAll = (req, res)=>{
     const city =  new RegExp(`.*${req.query.searchBy}.*`,'i')
 
     City.find({citiesName}).then(cities=>{
