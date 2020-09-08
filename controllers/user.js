@@ -120,6 +120,7 @@ exports.getOne = (req, res) => {
             }
             console.log(user);
             res.send(user)
+
         }
     ).catch(error => {
         return res.status(500).send({

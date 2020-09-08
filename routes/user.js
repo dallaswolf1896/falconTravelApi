@@ -16,6 +16,6 @@ api.put('/user/update/:id', auth.isAuth, user.update); //Vamos a modificar un us
 api.delete('/user/remove/:id', () => {}); //Vamos a eliminar un usuario
 api.get('/user/getAll', user.getAll); //Vamos a obtener todos los usuarios
 api.post('/user/login', user.login);
-api.get('/user/getOne/:id', user.getOne)
+api.get('/user/getOne/:id', user.getOne) //Vamos a obtener un usuario
 
 module.exports = api
