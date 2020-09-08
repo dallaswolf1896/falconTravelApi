@@ -70,7 +70,7 @@ exports.update = (req, res) => {
         if (!usuario) {
             return res.status(400).send({ message: 'No se encontro usuario con ese ID' })
         }
-        res.send(usuario)
+        res.send({ jwt: service.createToken(usuario) })
 
     }).catch(error => {
         if (error.kind == 'ObjectId') {
