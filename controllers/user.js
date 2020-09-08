@@ -111,16 +111,15 @@ exports.login = (req, res) => {
 }
 
 exports.getOne = (req, res) => {
-    console.log('sdsdsd')
-    User.findOne({ _id: req.params.id }, userData).then(
+    User.findOne({ _id: req.params.id }).then(
         user => {
-            if (!userData) {
+            if (!user) {
                 return res.status(404).send({
                     message: 'El usuario no existe'
                 })
             }
-            console.log(userData);
-            res.send(userData)
+            console.log(user);
+            res.send(user)
         }
     ).catch(error => {
         return res.status(500).send({
