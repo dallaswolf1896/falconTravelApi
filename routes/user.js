@@ -12,7 +12,7 @@ const auth = require('../middleware/auth')
  */
 
 api.post('/user/create', user.create); //Vamos a crear un usuario
-api.put('/user/update/:id', auth.isAuth, user.update); //Vamos a modificar un usuario
+api.put('/user/update/:id', user.update); //Vamos a modificar un usuario
 api.delete('/user/remove/:id', () => {}); //Vamos a eliminar un usuario
 api.get('/user/getAll', user.getAll); //Vamos a obtener todos los usuarios
 api.post('/user/login', user.login);
