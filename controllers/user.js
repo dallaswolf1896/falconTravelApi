@@ -19,13 +19,13 @@ exports.create = (req, res) => {
         })
     }
 
-    User.countDocuments({email: req.body.email}).then(userEmail => {
-        if(userEmail >= 1){
-            return res.status(400).send({message:'Señor usuario, el email ya existe'})
+    User.countDocuments({ email: req.body.email }).then(userEmail => {
+        if (userEmail >= 1) {
+            return res.status(400).send({ message: 'Señor usuario, el email ya existe' })
         }
     })
 
-    
+
 
     const usuario = new User({
         firstName: req.body.firstName,
@@ -70,7 +70,7 @@ exports.update = (req, res) => {
         if (!usuario) {
             return res.status(400).send({ message: 'No se encontro usuario con ese ID' })
         }
-        res.send(usuario)
+        res.send({ jwt: service.createToken(usuario) })
 
     }).catch(error => {
         if (error.kind == 'ObjectId') {
@@ -83,10 +83,10 @@ exports.update = (req, res) => {
 
 exports.getAll = (req, res) => {
     let search = {};
-    if(req.query.searchBy != undefined && req.query.searchBy != ''){
-        search = {firstName: new RegExp(`.*${req.query.searchBy}.*`, 'i') }
+    if (req.query.searchBy != undefined && req.query.searchBy != '') {
+        search = { firstName: new RegExp(`.*${req.query.searchBy}.*`, 'i') }
     }
-    User.find( search ).then(users => {
+    User.find(search).then(users => {
         res.send(users)
     }).catch(error => {
         res.status(500).send({ message: error.message || 'Error de conexion con el servidor' })
@@ -107,5 +107,24 @@ exports.login = (req, res) => {
         } else {
             return res.status(500).send({ message: 'Error al iniciar sesión' })
         }
+    })
+}
+
+exports.getOne = (req, res) => {
+    User.findOne({ _id: req.params.id }).then(
+        user => {
+            if (!user) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                })
+            }
+            console.log(user);
+            res.send(user)
+
+        }
+    ).catch(error => {
+        return res.status(500).send({
+            message: 'Error'
+        })
     })
 }

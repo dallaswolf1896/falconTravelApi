@@ -8,7 +8,13 @@ exports.createToken = (dataUser) => {
         iat: moment().unix(), //Fecha en la que se creó el token. (fecha actual)
         exp: moment().add('1', 'hour').unix(), //Fecha en la que expira el token. (fecha actual + 1 hora)
         firstName: dataUser.firstName,
-        lastName: dataUser.lastName
+        lastName: dataUser.lastName,
+        email: dataUser.email,
+        phone: dataUser.phone,
+        photo: dataUser.photo,
+        nationality: dataUser.nationality,
+        address: dataUser.address,
+        idDocument: dataUser.idDocument,
     }
     return jwt.encode(payload, secret) //Encriptamos la información que tenemos en la constante payload y la firmamos con lo que tenemos en la constante secret.
 }
