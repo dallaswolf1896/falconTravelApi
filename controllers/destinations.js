@@ -1,4 +1,5 @@
 const Destinations = require('../models/destinations');
+const mongoose = require('mongoose');
 
 exports.create = (req, res) => {
     if (!req.body) {
@@ -67,3 +68,14 @@ exports.getAll = (req, res)=>{
         res.status(500).send({message: error.message || 'Error de conexión'})
     })
 }
+
+exports.findByParams = (req, res) => {
+    const destination = new mongoose.Types.ObjectId(req.params.destination);
+    Destinations.findById(destination)
+    .then(dest => {
+        res.status(200).json(dest)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+} 

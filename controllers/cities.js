@@ -35,9 +35,9 @@ exports.update = (req, res) => {
 
 }
 exports.getAll = (req, res)=>{
-    const city =  new RegExp(`.*${req.query.searchBy}.*`,'i')
-
-    City.find({citiesName}).then(cities=>{
+    // const city =  new RegExp(`.*${req.query.searchBy}.*`,'i')
+    City.find()
+    .then(cities=>{
         res.send(cities)
     }).catch(error=> {
         res.status(500).send ({message: error.message || 'Error de  conexion'})
