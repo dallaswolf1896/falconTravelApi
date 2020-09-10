@@ -85,7 +85,7 @@ exports.getOne = (req, res) => {
         destination=>{
             res.send(destination)
         }
-    ).catch(
+    ).catch(error => {
         res.status(500).send({ message: error.message || 'Error de conexión' })
-    )
+    })
 }
