@@ -5,7 +5,6 @@ exports.create = (req, res) => {
     if (!req.body) {
         return res.status(400).send({ message: 'Todos los campos son requeridos' });
     }
-
     const destino = new Destinations({
         country: req.body.country,
         destinationName: req.body.destinationName,
@@ -13,13 +12,11 @@ exports.create = (req, res) => {
         description: req.body.description,
         stay: req.body.stay,
         imageLinks: req.body.imageLinks,
-        cityId: req.body.cityId
+        cityId: new mongoose.Types.ObjectId(req.body.cityId)
     })
-
     destino.save().then(
         data => {
-            res.send(data)
-
+            res.status(200).send(data)
         }
     ).catch(
         error => {
@@ -60,13 +57,10 @@ exports.update = (req, res) => {
 
 exports.getAll = (req, res) => {
     let searchBy = {}
-    console.log(req.query.searchBy)
     if (req.query.searchBy != undefined && req.query.searchBy != null) {
         const destination = new RegExp(`.*${req.query.searchBy}.*`, 'i')
-        console.log(req.query.searchBy)
         searchBy = { destinationName: destination }
     }
-    console.log(searchBy);
 
     Destinations.find(searchBy).then(destinations => {
         res.send(destinations)
@@ -77,12 +71,12 @@ exports.getAll = (req, res) => {
 
 exports.findByParams = (req, res) => {
     const destination = new mongoose.Types.ObjectId(req.params.destination);
-    Destinations.findById(destination)
+    Destinations.find({cityId: destination})
     .then(dest => {
         res.status(200).json(dest)
     })
     .catch(err => {
-        console.log(err)
+        res.status(500)
     })
 } 
 
