@@ -80,3 +80,12 @@ exports.findByParams = (req, res) => {
     })
 } 
 
+exports.getOne = (req, res) => {
+    Destinations.findOne({_id:req.params.id}).then(
+        destination=>{
+            res.send(destination)
+        }
+    ).catch(
+        res.status(500).send({ message: error.message || 'Error de conexión' })
+    )
+}
